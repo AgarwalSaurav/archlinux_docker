@@ -126,6 +126,7 @@ if [ -z "${AUX_HOME}" ]; then
 fi
 export VISUAL=vim
 export EDITOR="$VISUAL"
+export_with_directory PATH "/usr/local/bin"
 export_with_directory PATH "${HOME}/.local/bin"
 export_with_directory LD_LIBRARY_PATH "${HOME}/.local/lib"
 
