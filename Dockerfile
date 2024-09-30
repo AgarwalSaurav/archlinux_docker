@@ -8,7 +8,7 @@ RUN pacman -S --noconfirm vim tmux clang valgrind boost
 RUN pacman -S --noconfirm cuda cuda-tools
 RUN python -m venv /opt/venv
 COPY requirements.txt /tmp/requirements.txt
-RUN /opt/venv/bin/pip install -r /tmp/requirements.txt
+RUN /opt/venv/bin/pip install --no-cache-dir -r /tmp/requirements.txt
 # RUN rm -rf /var/cache/pacman/pkg/*
 # RUN rm -rf /var/lib/pacman/sync/*
 # RUN rm -rf /etc/pacman.d/gnupg
