@@ -14,6 +14,7 @@ torch_spline_conv
 torch_geometric
 torch-geometric-temporal
 jupyterlab
+plotly
 
 scikit-build-core
 setuptools_scm
