@@ -7,6 +7,7 @@ usermod -u $LOCAL_USER_ID user
 mkdir -p /home/user/.vim/undodir
 mkdir -p /home/user/.vim/backup
 git clone https://github.com/VundleVim/Vundle.vim.git /home/user/.vim/bundle/Vundle.vim
+chown -R user:user /opt/venv
 chown -R user:user /home/user/.vim
 gosu user bash -c 'vim -E -s -u /home/user/.vimrc +PluginInstall +qall'
 exec gosu user "$@"
