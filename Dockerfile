@@ -17,8 +17,6 @@ RUN useradd --shell /bin/bash -u 1001 -c "" -m user && usermod -a -G wheel user 
 RUN echo '%wheel ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers
 COPY dotfiles/.bashrc /home/user/.
 COPY dotfiles/.vimrc /home/user/.
-RUN mkdir -p /home/user/.vim/undodir
-RUN mkdir -p /home/user/.vim/backup
 ENV VENV_PATH=/opt/venv
 RUN echo "source /opt/venv/bin/activate" >> /home/user/.bashrc
 RUN mkdir /workspace
