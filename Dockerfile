@@ -4,7 +4,7 @@ RUN pacman -Syu --noconfirm
 RUN pacman -S --noconfirm base-devel cmake
 RUN pacman -S --noconfirm git graphviz doxygen python python-pip
 RUN pacman -S --noconfirm texlive-core texlive-latexextra texlive-fontsextra
-RUN pacman -S --noconfirm vim tmux clang valgrind boost wget
+RUN pacman -S --noconfirm vim tmux clang valgrind boost wget gnuplot
 RUN wget https://archive.archlinux.org/packages/c/cuda/cuda-12.4.1-4-x86_64.pkg.tar.zst
 RUN pacman -U --noconfirm cuda-12.4.1-4-x86_64.pkg.tar.zst
 RUN rm cuda-12.4.1-4-x86_64.pkg.tar.zst
