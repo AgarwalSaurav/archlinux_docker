@@ -1,16 +1,10 @@
 #!/bin/env bash
 
-echo "Starting with UID : $LOCAL_USER_ID"
-# modify existing user's id
-usermod -u $LOCAL_USER_ID user
-# run as user
-mkdir -p /home/user/.vim/undodir
-mkdir -p /home/user/.vim/backup
-git clone https://github.com/VundleVim/Vundle.vim.git /home/user/.vim/bundle/Vundle.vim
-chown -R user:user /opt/venv
-chown -R user:user /home/user/.vim
-gosu user bash -c 'vim -E -s -u /home/user/.vimrc +PluginInstall +qall'
-exec gosu user "$@"
+useradd --shell /bin/bash -u $LOCAL_USER_ID -o -c "" -m ${USER}
+usermod -aG wheel ${USER}
+echo "%wheel ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
-# exec gosu user vim -E -s -u "${HOME}/.vimrc" +PluginInstall +qall
-# /bin/bash
+tar -xf /root/user.tar.xz -C /home/${USER}
+chown -R ${USER} /opt/venv
+chown -R ${USER} /home/${USER}
+exec gosu ${USER} "$@"
