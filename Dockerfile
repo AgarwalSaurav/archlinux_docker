@@ -8,6 +8,8 @@ RUN pacman -S --noconfirm vim tmux clang openmp less valgrind boost wget gnuplot
 RUN wget https://archive.archlinux.org/packages/c/cuda/cuda-12.4.1-4-x86_64.pkg.tar.zst
 RUN pacman -U --noconfirm cuda-12.4.1-4-x86_64.pkg.tar.zst
 RUN rm cuda-12.4.1-4-x86_64.pkg.tar.zst
+RUN git clone https://aur.archlinux.org/paru.git /tmp/paru && cd /tmp/paru && makepkg -si --noconfirm
+RUN paru -S --noconfirm youcompleteme-git
 # RUN pacman -S --noconfirm cuda cuda-tools
 RUN python -m venv /opt/venv
 COPY requirements.txt /tmp/requirements.txt
