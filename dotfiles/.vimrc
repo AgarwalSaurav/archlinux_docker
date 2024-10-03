@@ -19,7 +19,7 @@ call vundle#begin()
 Plugin 'catppuccin/vim', { 'as': 'catppuccin' }
 Plugin 'preservim/nerdtree'
 Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'dense-analysis/ale'
+" Plugin 'dense-analysis/ale'
 " Plugin 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
