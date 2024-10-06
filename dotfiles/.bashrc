@@ -41,8 +41,9 @@ case "$TERM" in
   xterm-color|*-256color) color_prompt=yes;;
 esac
 
+PROMPT_DIRTRIM=2
 if [ "$color_prompt" = yes ]; then
-  PS1="\[\033[01;31m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\$ "
+  PS1="\[\033[01;30m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ "
 else
   PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
@@ -180,3 +181,4 @@ export CUDA_HOME=/opt/cuda
 export CUDA_PATH=/opt/cuda
 export_with_directory PATH /opt/cuda/bin
 export_with_directory LD_LIBRARY_PATH /opt/cuda/lib64
+source /opt/venv/bin/activate
