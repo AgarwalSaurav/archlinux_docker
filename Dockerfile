@@ -2,9 +2,9 @@ FROM archlinux:latest
 ENV TERM=xterm-256color
 RUN pacman -Syu --noconfirm
 RUN pacman -S --noconfirm base-devel cmake man man-db man-pages sudo
-RUN pacman -S --noconfirm git graphviz doxygen python python-pip
+RUN pacman -S --noconfirm git graphviz doxygen python python-pip pipewire-jack eigen cgal
 RUN pacman -S --noconfirm texlive-core texlive-latexextra texlive-fontsextra
-RUN pacman -S --noconfirm vim tmux clang openmp less valgrind boost wget gnuplot openssh
+RUN pacman -S --noconfirm vim tmux clang openmp less valgrind boost wget gnuplot openssh ffmpeg
 RUN wget https://archive.archlinux.org/packages/c/cuda/cuda-12.4.1-4-x86_64.pkg.tar.zst
 RUN pacman -U --noconfirm cuda-12.4.1-4-x86_64.pkg.tar.zst
 RUN rm cuda-12.4.1-4-x86_64.pkg.tar.zst
