@@ -180,5 +180,6 @@ venv_cc() {
 export CUDA_HOME=/opt/cuda
 export CUDA_PATH=/opt/cuda
 export_with_directory PATH /opt/cuda/bin
+export_with_directory LD_LIBRARY_PATH /usr/local/lib
 export_with_directory LD_LIBRARY_PATH /opt/cuda/lib64
 source /opt/venv/bin/activate
