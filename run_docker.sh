@@ -43,16 +43,6 @@ warning_message() {
   echo -e "${YELLOW}Warning: $1${NC}"
 }
 
-if [[ $# -ne 1 ]]; then
-  print_usage
-fi
-
-MOUNT_HOST_DIR="$1"
-
-if [[ ! -d "$MOUNT_HOST_DIR" ]]; then
-  error_exit "Mount directory '$MOUNT_HOST_DIR' does not exist."
-fi
-
 CONTAINER_NAME="${USER}-archlinux"
 IMAGE_NAME="agarwalsaurav/archlinux:cu124"
 
@@ -69,6 +59,16 @@ if ! docker ps -q -f name="${CONTAINER_NAME}" | grep -q .; then
     if [[ "$response" =~ ^[Yy]$ ]]; then
       docker rm "${CONTAINER_NAME}" || error_exit "Failed to remove container."
     fi
+  fi
+
+  if [[ $# -ne 1 ]]; then
+    print_usage
+  fi
+
+  MOUNT_HOST_DIR="$1"
+
+  if [[ ! -d "$MOUNT_HOST_DIR" ]]; then
+    error_exit "Mount directory '$MOUNT_HOST_DIR' does not exist."
   fi
 
   info_message "Starting a new container '${CONTAINER_NAME}'."
