@@ -9,9 +9,6 @@ RUN wget https://archive.archlinux.org/packages/c/cuda/cuda-12.4.1-4-x86_64.pkg.
 RUN pacman -U --noconfirm cuda-12.4.1-4-x86_64.pkg.tar.zst
 RUN rm cuda-12.4.1-4-x86_64.pkg.tar.zst
 # RUN pacman -S --noconfirm cuda cuda-tools
-RUN python -m venv /opt/venv
-COPY requirements.txt /tmp/requirements.txt
-RUN /opt/venv/bin/pip install --no-cache-dir -r /tmp/requirements.txt
 ARG AUR_USER=user
 # can be paru or yay
 ARG HELPER=paru
@@ -19,6 +16,10 @@ ARG HELPER=paru
 ADD add-aur.sh /root
 RUN bash /root/add-aur.sh "${AUR_USER}" "${HELPER}"
 RUN aur-install paru vim-youcompleteme-git
+RUN aur-install paru python312
+RUN python3.12 -m venv /opt/venv
+COPY requirements.txt /tmp/requirements.txt
+RUN /opt/venv/bin/pip install --no-cache-dir -r /tmp/requirements.txt
 
 # RUN rm -rf /var/cache/pacman/pkg/*
 # RUN rm -rf /var/lib/pacman/sync/*
