@@ -131,13 +131,6 @@ export_with_directory PATH "/usr/local/bin"
 export_with_directory PATH "${HOME}/.local/bin"
 export_with_directory LD_LIBRARY_PATH "${HOME}/.local/lib"
 
-
-export GUROBI_HOME=${AUX_HOME}/opt/gurobi1002/linux64
-export GUROBI_LIB="gurobi10"
-export_with_directory PATH "${GUROBI_HOME}/bin"
-export_with_directory LD_LIBRARY_PATH "${GUROBI_HOME}/lib"
-
-
 ros2_on(){
   export ROS_DOMAIN_ID=42
   export ROS_VERSION=2
@@ -183,3 +176,4 @@ export_with_directory PATH /opt/cuda/bin
 export_with_directory LD_LIBRARY_PATH /usr/local/lib
 export_with_directory LD_LIBRARY_PATH /opt/cuda/lib64
 source /opt/venv/bin/activate
+export NVCC_CCBIN=gcc-13

@@ -1,0 +1,27 @@
+--find-links https://data.pyg.org/whl/torch-2.6.0+cu126.html
+torch_scatter
+torch_sparse
+torch_cluster
+torch_spline_conv
+torch_geometric
+torch-geometric-temporal
+jupyterlab
+plotly
+
+scikit-build-core
+setuptools_scm
+pyproject_metadata
+pathspec
+hatchling
+pylint
+argcomplete
+cpplint
+clang-format
+black
+isort
+flake8
+mypy
+pytest
+nox
+pipx
+watchdog

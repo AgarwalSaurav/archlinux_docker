@@ -44,7 +44,7 @@ warning_message() {
 }
 
 CONTAINER_NAME="${USER}-archlinux"
-IMAGE_NAME="agarwalsaurav/archlinux:cu124"
+IMAGE_NAME="agarwalsaurav/archlinux:cu126"
 
 if ! docker ps -q -f name="${CONTAINER_NAME}" | grep -q .; then
   if docker ps -aq -f status=exited -f name="${CONTAINER_NAME}" | grep -q .; then
