@@ -1,6 +1,26 @@
 wheel
 numpy
---find-links https://download.pytorch.org/whl/cu126
+plotly
+jupyterlab
+scikit-build-core
+setuptools_scm
+pyproject_metadata
+pathspec
+hatchling
+pyling
+argcomplete
+cpplint
+clang-format
+black
+isort
+flake8
+mypy
+pytest
+nox
+pipx
+watchdog
+ipython
+--find-links https://download.pytorch.org/whl/cu128
 torch
 torchvision
 torchaudio
