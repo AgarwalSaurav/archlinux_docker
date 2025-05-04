@@ -17,7 +17,7 @@ mkdir -p "${WORKDIR}"
 cd "${WORKDIR}"
 
 # Ensure the virtualenv exists
-if [ ! -x "${VENV}/bin/activate" ]; then
+if [ ! -x "${VENV}/bin/pip" ]; then
   echo "Error: virtual environment not found at ${VENV}"
   exit 1
 fi
@@ -26,7 +26,7 @@ fi
 PIP="${VENV}/bin/pip"
 
 # Upgrade pip, setuptools, wheel
-"${PIP}" install --upgrade pip setuptools wheel
+"${PIP}" install pip setuptools wheel
 
 # List of repositories (in installation order)
 REPOS=(
@@ -48,8 +48,11 @@ for repo in "${REPOS[@]}"; do
   echo "Initializing/updating submodules..."
   git submodule update --init --recursive
 
-  echo "Installing ${name} via pip..."
-  "${PIP}" install --no-cache-dir .
+  if [ "${name}" == "pyg-lib" ]; then
+    "${PIP}" install --no-cache-dir --no-build-isolation .
+  else
+    "${PIP}" install --no-cache-dir .
+  fi
 
   # Return to workdir for next repo
   cd "${WORKDIR}"

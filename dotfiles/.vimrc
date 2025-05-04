@@ -27,7 +27,7 @@ Plugin 'godlygeek/tabular'
 Plugin 'iamcco/markdown-preview.nvim'
 " Plugin 'preservim/vim-markdown'
 "
-Plugin 'github/copilot.vim'
+" Plugin 'github/copilot.vim'
 
 " Plugin 'dpelle/vim-LanguageTool'
 Plugin 'NLKNguyen/papercolor-theme'

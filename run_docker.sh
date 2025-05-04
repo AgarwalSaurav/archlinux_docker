@@ -44,7 +44,7 @@ warning_message() {
 }
 
 CONTAINER_NAME="${USER}-archlinux"
-IMAGE_NAME="agarwalsaurav/archlinux:cu126"
+IMAGE_NAME="agarwalsaurav/archlinux:cu128"
 
 if ! docker ps -q -f name="${CONTAINER_NAME}" | grep -q .; then
   if docker ps -aq -f status=exited -f name="${CONTAINER_NAME}" | grep -q .; then
@@ -76,6 +76,7 @@ if ! docker ps -q -f name="${CONTAINER_NAME}" | grep -q .; then
     --name="${CONTAINER_NAME}" \
     --env=USER="$USER" \
     --env=LOCAL_USER_ID="$(id -u)" \
+    --env=LOCAL_GROUP_ID="$(id -g)" \
     --gpus=all \
     --net=host \
     --privileged \
