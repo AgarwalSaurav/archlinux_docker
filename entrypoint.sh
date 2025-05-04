@@ -14,6 +14,7 @@ usermod -aG wheel ${USER}
 # gosu ${USER} /bin/bash -c "git config --global init.defaultBranch main"
 # exec gosu ${USER} "$@"
 
+chown -R ${USER} /opt/venv
 sudo -u "${USER}" git config --global init.defaultBranch main
 
 exec gosu "${USER}" "$@"

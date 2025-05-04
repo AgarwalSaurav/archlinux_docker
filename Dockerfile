@@ -7,7 +7,13 @@ FROM archlinux:latest AS base
 SHELL ["/usr/bin/bash", "-euxo", "pipefail", "-c"]
 ENV TERM=xterm-256color \
     LANG=en_US.UTF-8 \
-    PYTHONIOENCODING=UTF-8
+    PYTHONIOENCODING=UTF-8 \
+    LANGUAGE=en_US:en
+RUN sed -Ei \
+        -e 's/^#\s*(en_US\.UTF-8 UTF-8)/\1/' \
+        /etc/locale.gen && \
+    locale-gen && \
+    echo 'LANG=en_US.UTF-8' > /etc/locale.conf
 
 # --- system update & core toolchain -----------------------------------------
 RUN pacman -Syu --noconfirm --needed \
@@ -20,7 +26,6 @@ RUN pacman -Syu --noconfirm --needed \
       gcc14 cuda cuda-tools openmp opencl-nvidia \
       && pacman -Scc --noconfirm
 
-# ───────────────────────────────────────── DEV ──────────────────────────────────────────
 FROM base AS dev
 ARG AUR_USER
 ARG AUR_HELPER
@@ -56,14 +61,10 @@ ENV PATH="${VIRTUAL_ENV}/bin:${PATH}"
 FROM pipenv AS final
 SHELL ["/usr/bin/bash", "-euxo", "pipefail", "-c"]
 # --- skeleton dotfiles (only once) ------------------------------------------
-COPY dotfiles/.inputrc dotfiles/.bashrc dotfiles/.vimrc /etc/skel/
-COPY vim.tar.xz /etc/skel/vim.tar.xz
+COPY dotfiles/.inputrc dotfiles/.bashrc dotfiles/.vimrc dotfiles/tmux.conf vim.tar.xz /etc/skel/
 RUN tar -C /etc/skel -xf /etc/skel/vim.tar.xz && rm /etc/skel/vim.tar.xz
 
-# ──────────────────────────────────────── FINAL ─────────────────────────────────────────
-
 WORKDIR /workspace
-RUN mkdir -p /workspace
 
 # entrypoint
 COPY --chmod=755 entrypoint.sh /usr/local/bin/entrypoint
