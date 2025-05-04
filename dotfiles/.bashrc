@@ -125,8 +125,6 @@ export_with_directory() {
 if [ -z "${AUX_HOME}" ]; then
   export AUX_HOME=/workspace
 fi
-export VISUAL=vim
-export EDITOR="$VISUAL"
 export_with_directory PATH "/usr/local/bin"
 export_with_directory PATH "${HOME}/.local/bin"
 export_with_directory LD_LIBRARY_PATH "${HOME}/.local/lib"
@@ -170,11 +168,9 @@ venv_cc() {
   source "${CoverageControl_ws}/venv/bin/activate"
 }
 
-export CUDA_HOME=/opt/cuda
-export CUDA_PATH=/opt/cuda
 export_with_directory PATH /opt/cuda/bin
 export_with_directory LD_LIBRARY_PATH /usr/local/lib
 export_with_directory LD_LIBRARY_PATH /opt/cuda/lib64
 source /opt/venv/bin/activate
-export NVCC_CCBIN=gcc-14
+# export NVCC_CCBIN=gcc-14
 # export PYTHONUNBUFFERED=
