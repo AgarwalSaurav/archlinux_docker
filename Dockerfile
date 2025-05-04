@@ -33,41 +33,43 @@ RUN pacman -Syu --noconfirm --needed \
       gcc14 cuda cuda-tools openmp opencl-nvidia \
       && pacman -Scc --noconfirm
 
+COPY add-aur.sh requirements.txt install_pyg.sh /root/tmp/
+
 FROM base AS dev
 ARG AUR_USER
 ARG AUR_HELPER
 ARG MAKEFLAGS
 SHELL ["/usr/bin/bash", "-euxo", "pipefail", "-c"]
 
-COPY add-aur.sh requirements.txt install_pyg.sh vim.tar.xz dotfiles /tmp/
-
-RUN chmod +x /tmp/add-aur.sh && \
-    bash /tmp/add-aur.sh "${AUR_USER}" "${AUR_HELPER}" && \
-    rm /tmp/add-aur.sh
+RUN AUR_SCRIPT=/root/tmp/add-aur.sh; chmod +x ${AUR_SCRIPT} && \
+    bash ${AUR_SCRIPT} "${AUR_USER}" "${AUR_HELPER}" && \
+    rm ${AUR_SCRIPT}
 
 RUN aur-install paru vim-youcompleteme-git
 
-COPY --from=tianon/gosu /gosu /usr/local/bin/
-RUN chmod +x /usr/local/bin/gosu
+COPY --chmod=+x --from=tianon/gosu /gosu /usr/local/bin/
+# RUN chmod +x /usr/local/bin/gosu
 
-FROM dev AS pipenv
+FROM base AS pipenv
 SHELL ["/usr/bin/bash", "-euxo", "pipefail", "-c"]
 # --- virtualenv --------------------------------------------------------------
 RUN python -m venv ${VIRTUAL_ENV} && \
     source ${VIRTUAL_ENV}/bin/activate && \
     ${VIRTUAL_ENV}/bin/pip install pip setuptools wheel && \
-    ${VIRTUAL_ENV}/bin/pip install --no-cache-dir -r /tmp/requirements.txt && \
-    rm /tmp/requirements.txt
+    ${VIRTUAL_ENV}/bin/pip install --no-cache-dir -r /root/tmp/requirements.txt && \
+    rm /root/tmp/requirements.txt
 ENV PATH="${VIRTUAL_ENV}/bin:${PATH}"
 
 # --- PyTorch Geometric build script -------------------------------
-RUN /tmp/install_pyg.sh /tmp/pyg_build ${VIRTUAL_ENV} && rm -rf /tmp/pyg_build /tmp/install_pyg.sh
+RUN /root/tmp/install_pyg.sh /root/tmp/pyg_build ${VIRTUAL_ENV} && rm -rf /root/tmp/pyg_build /root/tmp/install_pyg.sh
 
-FROM pipenv AS final
+FROM dev AS final
 SHELL ["/usr/bin/bash", "-euxo", "pipefail", "-c"]
+COPY --from=pipenv /opt/venv /opt/venv
+ENV PATH="${VIRTUAL_ENV}/bin:${PATH}"
 # --- skeleton dotfiles (only once) ------------------------------------------
-# COPY dotfiles/.inputrc dotfiles/.bashrc dotfiles/.vimrc dotfiles/tmux.conf vim.tar.xz /etc/skel/
-RUN cp -r /tmp/dotfiles/. /etc/skel/. && tar -C /etc/skel -xf /tmp/vim.tar.xz && rm /tmp/vim.tar.xz && rm -r /tmp/dotfiles
+COPY dotfiles/.inputrc dotfiles/.bashrc dotfiles/.vimrc dotfiles/tmux.conf vim.tar.xz /etc/skel/
+RUN tar -C /etc/skel -xf /etc/skel/vim.tar.xz && rm -r /root/tmp/ && rm /etc/skel/vim.tar.xz
 
 WORKDIR /workspace
 
