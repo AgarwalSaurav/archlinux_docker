@@ -72,7 +72,7 @@ if ! docker ps -q -f name="${CONTAINER_NAME}" | grep -q .; then
   fi
 
   info_message "Starting a new container '${CONTAINER_NAME}'."
-  docker run -it \
+  docker run -it -d  --init \
     --name="${CONTAINER_NAME}" \
     --env=USER="$USER" \
     --env=LOCAL_USER_ID="$(id -u)" \
@@ -81,6 +81,7 @@ if ! docker ps -q -f name="${CONTAINER_NAME}" | grep -q .; then
     --net=host \
     --privileged \
     --ipc=host \
+    --restart=always \
     -v "${MOUNT_HOST_DIR}:/workspace:rw" \
     "${IMAGE_NAME}" \
     bash
