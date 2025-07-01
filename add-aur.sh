@@ -9,11 +9,6 @@ set -o xtrace
 AUR_USER="${1:-ab}"
 HELPER="${2:-yay}"
 
-# update mirrorlist
-#curl --silent --location https://raw.githubusercontent.com/greyltc/docker-archlinux/master/get-new-mirrors.sh > /tmp/get-new-mirrors
-#chmod +x /tmp/get-new-mirrors
-#mv /tmp/get-new-mirrors /bin/.
-#get-new-mirrors
 
 # we're gonna need sudo to use the helper properly
 pacman --sync --needed --noconfirm --noprogressbar sudo || echo "Nothing to do"
@@ -37,8 +32,6 @@ sudo -u ${AUR_USER} -D~ bash -c 'mkdir -p .config/pacman'
 # use all possible cores for builds
 sudo -u ${AUR_USER} -D~ bash -c 'echo MAKEFLAGS="-j\$(nproc)" > .config/pacman/makepkg.conf'
 
-# don't compress the packages built here
-#sudo -u ${AUR_USER} -D~ bash -c 'echo PKGEXT=".pkg.tar" >> .config/pacman/makepkg.conf'
 
 # setup storage for AUR packages built
 NEW_PKGDEST="/var/cache/makepkg/pkg"
